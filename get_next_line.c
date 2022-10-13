@@ -18,7 +18,7 @@ char	*ft_add_buff(char *buffer, int fd)
 	int		read_bytes;
 	char	read_array[BUFFER_SIZE + 1];
 
-	if (!buffer)
+/* 	if (!buffer)
 	{
 		buffer = malloc(1);
 		if (!buffer)
@@ -26,13 +26,16 @@ char	*ft_add_buff(char *buffer, int fd)
 			free(buffer);
 			return (NULL);
 		}
-	}
+	} */
 	while((read_bytes = read(fd, read_array, BUFFER_SIZE)) > 0)
 	{
 		read_array[read_bytes] = '\0';
 		buffer = ft_strjoin(buffer, read_array);
 		if (ft_strchr(buffer, '\n') != -1)
+		{
+			free(buffer);
 			return (buffer);
+		}
 	}
 	if (read_bytes == 0 && ft_strlen(buffer) == 0)
 		return(NULL);
@@ -54,7 +57,7 @@ char	*ft_add_line(char *buffer)
 	line = malloc(len + 1 * sizeof(char));
 	if (!line)
 	{
-		free(buffer);
+	//	free(buffer);
 		return (NULL);
 	}
 	line[len + 1] = '\0';

@@ -55,12 +55,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	newstr = (char *)malloc((1 + strl) * sizeof(char));
 	if (!newstr)
 		return (NULL);
-	while (s1 && s1[i] != '\0')
+	while (ft_strlen(s1) > 0 && s1[i] != '\0')
 	{
 		newstr[i] = s1[i];
 		i++;
 	}
 	ft_strlcpy((char *)&newstr[i], s2, ft_strlen(s2) + 1);
+	if (s1)
+	free(s1);
 	return (newstr);
 }
 
@@ -69,13 +71,13 @@ int	ft_strchr(const char *str, int ch)
 	int	i;
 
 	i = 0;
-	while (i < ft_strlen(str))
+	while (str && i < ft_strlen(str))
 	{
 		if (str[i] == (char ) ch)
 			return (i);
 		i++;
 	}
-	if (str[ft_strlen(str)] == (char ) ch)
+	if (str && str[ft_strlen(str)] == (char ) ch)
 		return (i);
 	return (-1);
 }
