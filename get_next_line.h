@@ -19,17 +19,18 @@
 # include <limits.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 2
 #endif
 
 char	*get_next_line(int fd);
-int	    ft_strlen(const char *str);
+int     ft_strlen(const char *str);
 size_t  ft_strlcpy(char *dest, char *src, size_t size);
 char	*ft_strjoin(char *s1, char *s2);
-int 	ft_strchr(const char *str, int ch);
+int     ft_strchr(const char *str, int ch);
 char	*ft_add_buff(char *buffer, int fd);
 char	*ft_substr(char *s, int start, int len);
 char	*ft_add_line(char *buffer);
 char    *ft_cut_buff(char *buffer);
+char	*ft_free(char *buffer, char *buf);
 
 #endif

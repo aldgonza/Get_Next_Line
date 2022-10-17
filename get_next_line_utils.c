@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int	ft_strlen(const char *str)
 
@@ -20,7 +19,7 @@ int	ft_strlen(const char *str)
 
 	i = 0;
 	if (!str)
-		return (i);
+		return (0);
 	while (str[i] != '\0')
 	{
 		i++;
@@ -34,35 +33,37 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 
 	count = 0;
 	if (size == 0)
-		return (ft_strlen(src));
+		return (0);
 	while (src [count] != '\0' && count < (size - 1))
 	{
 		dest[count] = src [count];
 		count++;
 	}
 	dest[count] = '\0';
-	return (ft_strlen(src));
+	return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
-	size_t	i;
-	size_t	strl;
+	int		i;
+	int		size1;
+	int		size2;
 
 	i = 0;
-	strl = ft_strlen(s1) + ft_strlen(s2);
-	newstr = (char *)malloc((1 + strl) * sizeof(char));
+	size1 = 0;
+	if (s1)
+		size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	newstr = (char *)malloc((1 + (size1 + size2)) * sizeof(char));
 	if (!newstr)
 		return (NULL);
-	while (ft_strlen(s1) > 0 && s1[i] != '\0')
+	while (size1 > 0 && s1[i] != '\0')
 	{
 		newstr[i] = s1[i];
 		i++;
 	}
-	ft_strlcpy((char *)&newstr[i], s2, ft_strlen(s2) + 1);
-	if (s1)
-	free(s1);
+	ft_strlcpy((char *)&newstr[i], s2, size2 + 1);
 	return (newstr);
 }
 
@@ -71,50 +72,30 @@ int	ft_strchr(const char *str, int ch)
 	int	i;
 
 	i = 0;
-	while (str && i < ft_strlen(str))
+	while (str[i])
 	{
 		if (str[i] == (char ) ch)
 			return (i);
 		i++;
 	}
-	if (str && str[ft_strlen(str)] == (char ) ch)
+	if (str && str[i] == (char ) ch)
 		return (i);
 	return (-1);
 }
 
-char	*ft_cut_buff(char *buffer)
-{
-	char	*temp;
-	int		i;
-
-	i = ft_strchr(buffer, '\n');
-	if (i == ft_strlen(buffer) - 1)
-		return (NULL);
-	if (i == -1)
-		return (NULL);
-	temp = malloc(ft_strlen(buffer) - i);
-	if (!temp)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	temp[0] = '\0';
-	temp = ft_substr(buffer, i + 1, ft_strlen(buffer));
-	free(buffer);
-	return(temp);
-}
 char	*ft_substr(char *s, int start, int len)
 {
 	char	*newstr;
+	int		i;
 
-	if (start > ft_strlen(s))
-		start = ft_strlen(s);
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - (int)start;
+	i = ft_strlen(s);
+	if (start > i)
+		start = i;
+	if (len > i - start)
+		len = i - (int)start;
 	newstr = (char *)malloc((len + 1) * sizeof(char));
 	if (!newstr)
 		return (NULL);
 	ft_strlcpy(newstr, &s[start], len + 1);
-	free(newstr);
 	return (newstr);
 }

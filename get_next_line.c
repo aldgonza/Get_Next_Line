@@ -11,64 +11,82 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
+char	*ft_free(char *buffer, char *buf)
+{
+	char	*temp;
+
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
+}
+
+////////////////////////////////////////ADD_BUFF
 char	*ft_add_buff(char *buffer, int fd)
 {
 	int		read_bytes;
 	char	read_array[BUFFER_SIZE + 1];
-
-/* 	if (!buffer)
-	{
-		buffer = malloc(1);
-		if (!buffer)
-		{
-			free(buffer);
-			return (NULL);
-		}
-	} */
-	while((read_bytes = read(fd, read_array, BUFFER_SIZE)) > 0)
+	
+	while((read_bytes = read(fd, read_array, BUFFER_SIZE)) > 0)/////////////
 	{
 		read_array[read_bytes] = '\0';
-		buffer = ft_strjoin(buffer, read_array);
+		buffer = ft_free(buffer, read_array);
 		if (ft_strchr(buffer, '\n') != -1)
-		{
-			free(buffer);
 			return (buffer);
-		}
 	}
-	if (read_bytes == 0 && ft_strlen(buffer) == 0)
-		return(NULL);
-	free(buffer);
+	if (read_bytes == 0 && !buffer)
+		return (NULL);
 	return (buffer);
 }
 
+////////////////////////////////////////ADD_LINE
 char	*ft_add_line(char *buffer)
 {
-	char	*line;
+	char	*ret;
 	int		len;
 	int		i;
 
 	i = 0;
-	if(!buffer)
-		return(NULL);
-	if ((len = (ft_strchr(buffer, '\n'))) == -1)
+	len = ft_strchr(buffer, '\n');
+	if (!buffer)
+		return (0);
+	if (len == -1)
 		len = ft_strlen(buffer);
-	line = malloc(len + 1 * sizeof(char));
-	if (!line)
-	{
-	//	free(buffer);
+	ret = malloc((len + 2) * sizeof(char));
+	if (!ret)
 		return (NULL);
-	}
-	line[len + 1] = '\0';
+	ret[len + 1] = '\0';
 	while (i < (len + 1))
 	{
-		line[i] = buffer[i];
+		ret[i] = buffer[i];
 		i++;
 	}
-	return (line);
+	return (ret);
 }
 
+////////////////////////////////////////CUT_BUFF
+char	*ft_cut_buff(char *buffer)
+{
+	char	*temp;
+	int		i;
+
+	i = ft_strchr(buffer, '\n');
+	if (i == ft_strlen(buffer) - 1)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	if (i == -1)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	temp = ft_substr(buffer, i + 1, ft_strlen(buffer));
+	free(buffer);
+	return (temp);
+}
+
+////////////////////////////////////////
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -83,23 +101,4 @@ char	*get_next_line(int fd)
 	line = ft_add_line(buffer);
 	buffer = ft_cut_buff(buffer);
 	return (line);
-}
-int	main()
-{
-	int		fdd;
-	char	*str;
-	int		i;
-
-	i = 0;
-	fdd = open("text.txt", O_RDONLY);
-	while (str)
-	{
-		i++;
-		str = get_next_line(fdd);
-		printf("RETURN %i :\n[%s]\n=========================\n",i , str);
-		if (!str)
-			printf("\nES NUUUUUULL CABRON!!!!\n");
-	}
-	close(fdd);
-	return (0);
 }

@@ -9,5 +9,30 @@
 #    Updated: 2022/09/10 21:07:36 by aldgonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-get_next_line: get_next_line.c get_next_line_utils.c
-	gcc -g -o get_next_line get_next_line.c get_next_line_utils.c -I.
+
+NAME	= get_next_line.a
+HEADER	= get_next_line.h
+SRCS	= get_next_line.c \
+		get_next_line_utils.c \
+
+CC		= gcc
+CFLAGS	= -Wall -Wextra -Werror
+OBJS	= ${SRCS:%.c=%.o}
+
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): ${HEADER} ${OBJS}
+		ar rc $(NAME) $(OBJS)
+
+
+all: $(NAME)
+
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
