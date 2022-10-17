@@ -26,13 +26,15 @@ char	*ft_add_buff(char *buffer, int fd)
 {
 	int		read_bytes;
 	char	read_array[BUFFER_SIZE + 1];
-	
-	while((read_bytes = read(fd, read_array, BUFFER_SIZE)) > 0)/////////////
+
+	read_bytes = read(fd, read_array, BUFFER_SIZE);
+	while (read_bytes > 0)
 	{
 		read_array[read_bytes] = '\0';
 		buffer = ft_free(buffer, read_array);
 		if (ft_strchr(buffer, '\n') != -1)
 			return (buffer);
+		read_bytes = read(fd, read_array, BUFFER_SIZE);
 	}
 	if (read_bytes == 0 && !buffer)
 		return (NULL);
