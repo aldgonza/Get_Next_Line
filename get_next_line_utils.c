@@ -12,6 +12,7 @@
 
 #include "get_next_line.h"
 
+////////////////////////////////////////STRLEN
 int	ft_strlen(const char *str)
 
 {
@@ -27,7 +28,8 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
+////////////////////////////////////////STRLCPY
+int	ft_strlcpy(char *dest, char *src, size_t size)
 {
 	size_t	count;
 
@@ -43,6 +45,7 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 	return (0);
 }
 
+////////////////////////////////////////STRJOIN
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
@@ -67,6 +70,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (newstr);
 }
 
+////////////////////////////////////////STRNCHR
 int	ft_strchr(const char *str, int ch)
 {
 	int	i;
@@ -83,6 +87,7 @@ int	ft_strchr(const char *str, int ch)
 	return (-1);
 }
 
+////////////////////////////////////////SUBSTR
 char	*ft_substr(char *s, int start, int len)
 {
 	char	*newstr;

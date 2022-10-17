@@ -12,6 +12,7 @@
 
 #include "get_next_line.h"
 
+////////////////////////////////////////FREE
 char	*ft_free(char *buffer, char *buf)
 {
 	char	*temp;
@@ -88,7 +89,7 @@ char	*ft_cut_buff(char *buffer)
 	return (temp);
 }
 
-////////////////////////////////////////
+////////////////////////////////////////GNL :)
 char	*get_next_line(int fd)
 {
 	char		*line;
