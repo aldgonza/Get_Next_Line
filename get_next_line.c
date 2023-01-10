@@ -6,14 +6,14 @@
 /*   By: aldgonza <aldgonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:24:28 by aldgonza          #+#    #+#             */
-/*   Updated: 2023/01/09 15:35:18 by aldgonza         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:35:33 by aldgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 ////////////////////////////////////////FREE
-char	*ft_free(char *buffer, char *buf)
+char	*ft_free_gnl(char *buffer, char *buf)
 {
 	char	*temp;
 
@@ -32,7 +32,7 @@ char	*ft_add_buff(char *buffer, int fd)
 	while (read_bytes > 0)
 	{
 		read_array[read_bytes] = '\0';
-		buffer = ft_free(buffer, read_array);
+		buffer = ft_free_gnl(buffer, read_array);
 		if (ft_strchr_gnl(buffer, '\n') != -1)
 			return (buffer);
 		read_bytes = read(fd, read_array, BUFFER_SIZE);
